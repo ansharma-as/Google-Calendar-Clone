@@ -47,8 +47,6 @@ scaler/
     └── tsconfig.json
 ```
 
-> There is also a `client/` directory containing an earlier Next.js prototype. The Vite-based `frontend/` app is the active UI.
-
 ---
 
 ## 🧩 Features

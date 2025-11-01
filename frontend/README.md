@@ -164,25 +164,7 @@ The application uses Redux Toolkit with the following slices:
 
 ## Build for Production
 
-1. Build the application:
-```bash
-npm run build
-```
-
 2. Preview the production build:
 ```bash
-npm run preview
+npm run dev
 ```
-
-The optimized files will be in the `dist` directory.
-
-## Browser Support
-
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-
-## License
-
-MIT
