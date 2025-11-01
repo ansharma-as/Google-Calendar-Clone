@@ -73,8 +73,7 @@ Make sure you have **Node.js 18+** and **MongoDB** (local or Atlas connection st
 ### 1. Clone & Install
 
 ```bash
-git clone <your-repo-url>
-cd scaler
+git clone https://github.com/ansharma-as/Google-Calendar-Clone
 ```
 
 #### Backend
@@ -83,11 +82,10 @@ cd scaler
 cd server
 npm install
 
-cp .env.example .env        # Ensure the example file exists, otherwise create .env manually
+cp .env        # Ensure the example file exists, otherwise create .env manually
 # Fill in environment values, e.g.:
 # MONGODB_URI=mongodb://localhost:27017/calendar-clone
 # JWT_SECRET=super-secret-string
-# CLIENT_URL=http://localhost:5173
 
 npm run dev                 # Starts http://localhost:9001
 ```
@@ -98,7 +96,7 @@ npm run dev                 # Starts http://localhost:9001
 cd ../frontend
 npm install
 
-cp .env.example .env        # Optional: configure API base URL
+cp .env        # Optional: configure API base URL
 # VITE_API_URL=http://localhost:9001
 
 npm run dev                 # Launches http://localhost:5173
