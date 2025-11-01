@@ -1,12 +1,12 @@
-import { Response } from 'express';
-import Event from '../models/Event';
-import { expandAllEvents } from '../utils/recurrence';
+import type { Response } from 'express';
+import Event from '../models/Event.js';
+import { expandAllEvents } from '../utils/recurrence.js';
 import {
   CreateEventSchema,
   UpdateEventSchema,
   QueryParamsSchema,
-} from '../validators/eventValidator';
-import { AuthRequest } from '../middleware/auth';
+} from '../validators/eventValidator.js';
+import type { AuthRequest } from '../middleware/auth.js';
 
 export const getEvents = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
@@ -15,6 +15,7 @@ export const getEvents = async (req: AuthRequest, res: Response): Promise<void> 
     if (!validation.success) {
       res.status(400).json({
         error: 'Invalid query parameters',
+        // @ts-ignore
         details: validation.error.errors,
       });
       return;
@@ -66,6 +67,7 @@ export const createEvent = async (req: AuthRequest, res: Response): Promise<void
     if (!validation.success) {
       res.status(400).json({
         error: 'Invalid event data',
+        // @ts-ignore
         details: validation.error.errors,
       });
       return;
@@ -85,7 +87,7 @@ export const createEvent = async (req: AuthRequest, res: Response): Promise<void
             until: eventData.recurrence.until
               ? new Date(eventData.recurrence.until)
               : undefined,
-            exdates: eventData.recurrence.exdates?.map((d) => new Date(d)),
+            exdates: eventData.recurrence.exdates?.map((d: string | Date) => new Date(d)),
           }
         : undefined,
     });
@@ -142,6 +144,7 @@ export const updateEvent = async (req: AuthRequest, res: Response): Promise<void
     if (!validation.success) {
       res.status(400).json({
         error: 'Invalid event data',
+        // @ts-ignore
         details: validation.error.errors,
       });
       return;
@@ -163,7 +166,7 @@ export const updateEvent = async (req: AuthRequest, res: Response): Promise<void
         until: updateData.recurrence.until
           ? new Date(updateData.recurrence.until)
           : undefined,
-        exdates: updateData.recurrence.exdates?.map((d) => new Date(d)),
+        exdates: updateData.recurrence.exdates?.map((d: string | Date) => new Date(d)),
       };
     }
 

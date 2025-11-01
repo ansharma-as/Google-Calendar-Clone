@@ -261,7 +261,7 @@ const CalendarHeader = ({ currentDate, onDateChange, onToggleSidebar }) => {
               >
                 <Menu className={`w-6 h-6 ${isDark ? 'text-neutral-400' : 'text-gray-600'}`} />
               </button>
-              <div className="flex items-center space-x-2">
+              <div className="hidden md:flex items-center space-x-2">
                 <img src="/logo.png" alt="Logo" className="w-8 h-8 sm:w-9 sm:h-9" />
                 <span className={`text-lg sm:text-2xl font-light ${isDark ? 'text-neutral-200' : 'text-gray-700'}`}>
                   Calendar

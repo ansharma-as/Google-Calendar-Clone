@@ -1,7 +1,7 @@
-import { Response } from 'express';
-import User from '../models/User';
-import { UserPreferencesSchema } from '../validators/authValidator';
-import { AuthRequest } from '../middleware/auth';
+import type { Response } from 'express';
+import User from '../models/User.js';
+import { UserPreferencesSchema } from '../validators/authValidator.js';
+import type { AuthRequest } from '../middleware/auth.js';
 
 export const getPreferences = async (req: AuthRequest, res: Response): Promise<void> => {
   try {

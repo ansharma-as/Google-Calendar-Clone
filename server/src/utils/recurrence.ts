@@ -1,5 +1,7 @@
-import { RRule, RRuleSet, rrulestr } from 'rrule';
-import { IEvent } from '../models/Event';
+import rruleLib from 'rrule';
+import type { IEvent } from '../models/Event.js';
+
+const { RRule, RRuleSet, rrulestr } = rruleLib;
 
 export interface ExpandedEvent {
   _id?: string;
@@ -23,7 +25,7 @@ export const expandRecurringEvent = (
   if (!event.recurrence) {
     if (event.start <= rangeEnd && event.end >= rangeStart) {
       return [{
-        _id: event._id.toString(),
+        _id: String(event._id),
         title: event.title,
         description: event.description,
         location: event.location,
@@ -38,9 +40,9 @@ export const expandRecurringEvent = (
     return [];
   }
 
-  let rrule: RRule;
+  let rrule: InstanceType<typeof RRule>;
   try {
-    rrule = rrulestr(event.recurrence.rule) as RRule;
+    rrule = rrulestr(event.recurrence.rule) as InstanceType<typeof RRule>;
   } catch (error) {
     console.error('Failed to parse RRULE:', error);
     return [];
@@ -49,21 +51,21 @@ export const expandRecurringEvent = (
   const occurrences = rrule.between(rangeStart, rangeEnd, true);
 
   const exdates = event.recurrence.exdates || [];
-  const exdateStrings = exdates.map(d => d.toISOString().split('T')[0]);
+  const exdateStrings = exdates.map((d: Date) => d.toISOString().split('T')[0]);
 
   const duration = event.end.getTime() - event.start.getTime();
 
   const expandedEvents: ExpandedEvent[] = occurrences
-    .filter(occurrence => {
+    .filter((occurrence: Date) => {
       const occurrenceDate = occurrence.toISOString().split('T')[0];
       return !exdateStrings.includes(occurrenceDate);
     })
-    .map(occurrence => {
+    .map((occurrence: Date) => {
       const occurrenceStart = new Date(occurrence);
       const occurrenceEnd = new Date(occurrence.getTime() + duration);
 
       return {
-        _id: `${event._id.toString()}_${occurrence.toISOString()}`,
+        _id: `${String(event._id)}_${occurrence.toISOString()}`,
         title: event.title,
         description: event.description,
         location: event.location,
@@ -72,7 +74,7 @@ export const expandRecurringEvent = (
         start: occurrenceStart,
         end: occurrenceEnd,
         isRecurring: true,
-        recurringEventId: event._id.toString(),
+        recurringEventId: String(event._id),
         reminders: event.reminders,
       };
     });

@@ -112,7 +112,7 @@ UserSchema.methods.generateAuthToken = function (): string {
       email: this.email,
     },
     secret,
-    { expiresIn }
+    { expiresIn } as jwt.SignOptions
   );
 };
 
