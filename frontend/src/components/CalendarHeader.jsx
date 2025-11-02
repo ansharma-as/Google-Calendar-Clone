@@ -90,7 +90,7 @@ const CalendarHeader = ({ currentDate, onDateChange, onToggleSidebar }) => {
 
   return (
     <header
-      className={`border-b ${isDark ? 'bg-neutral-900 border-neutral-700' : 'bg-gray-50 border-gray-200'}`}
+      className={`${isDark ? 'bg-neutral-900 border-neutral-700' : 'bg-gray-50 border-gray-200'}`}
     >
       {isSearchOpen ? (
         <div className="flex flex-col gap-3 px-3 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-4">
