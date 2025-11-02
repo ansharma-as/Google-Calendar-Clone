@@ -211,10 +211,10 @@ const EventModal = ({
   const footerPadding = variant === 'full' ? 'px-8 py-5' : 'px-6 py-4';
 
   const renderForm = () => (
-    <form onSubmit={handleSubmit} className="flex flex-col">
-      <div className="h-1.5 rounded-t-3xl" style={{ backgroundColor: formData.color }} />
+    <form onSubmit={handleSubmit} className="flex flex-col h-full">
+      <div className="h-1.5 rounded-t-3xl shrink-0" style={{ backgroundColor: formData.color }} />
 
-      <div className={headerPadding}>
+      <div className={`${headerPadding} shrink-0`}>
         <div className="flex items-center justify-between gap-3">
           <h3 className={`text-xl font-semibold ${sectionHeading}`}>
             {editEvent ? 'Edit event' : 'Add event'}
@@ -230,7 +230,7 @@ const EventModal = ({
         </div>
       </div>
 
-      <div className={bodyPadding}>
+      <div className={`${bodyPadding} overflow-y-auto min-h-0`}>
         <div className={`space-y-6 ${variant === 'full' ? 'max-w-full' : ''}`}>
           <div>
             <input
@@ -307,8 +307,8 @@ const EventModal = ({
           <div className="flex items-start gap-4">
             <div className="w-5 h-5 mt-2 rounded-full shadow-sm" style={{ backgroundColor: formData.color }} />
             <div className="flex-1">
-              <p className={`text-sm mb-3 font-medium ${subtleText}`}>Event colour</p>
-              <div className="flex flex-wrap gap-3">
+              <p className={`text-sm mb-3 font-medium ${subtleText}`}>Event color</p>
+              <div className="flex flex-wrap gap-4">
                 {colorOptions.map((color) => {
                   const isSelected = formData.color === color.value;
                   const ringClass = isSelected
@@ -321,7 +321,7 @@ const EventModal = ({
                       key={color.value}
                       type="button"
                       onClick={() => setFormData((prev) => ({ ...prev, color: color.value }))}
-                      className={`w-11 h-11 rounded-full transition-all duration-200 hover:scale-110 active:scale-95 shadow-md hover:shadow-lg ${ringClass}`}
+                      className={`w-6 h-6 rounded-full transition-all duration-200 hover:scale-110 active:scale-95 shadow-md hover:shadow-lg ${ringClass}`}
                       style={{ backgroundColor: color.value }}
                       title={color.name}
                     />
@@ -382,15 +382,15 @@ const EventModal = ({
       </div>
 
       <div
-        className={`flex flex-wrap items-center justify-between gap-3 border-t ${dividerClass} ${footerPadding}`}
+        className={`flex flex-wrap items-center justify-between border-t ${dividerClass} ${footerPadding} shrink-0`}
       >
-        <div className="flex items-center gap-3">
+        <div className="flex items-center">
           {editEvent && (
             <button
               type="button"
               onClick={handleDelete}
               disabled={isSaving}
-              className={`inline-flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium transition-all duration-200 ${
+              className={`inline-flex items-center gap-1 rounded-lg px-2 py-2.5 text-sm font-medium transition-all duration-200 ${
                 isDark ? 'text-red-400 hover:bg-red-500/10 disabled:text-red-900/60 disabled:opacity-50' : 'text-red-600 hover:bg-red-50 disabled:text-red-300 disabled:opacity-50'
               } disabled:cursor-not-allowed hover:scale-105 active:scale-95`}
             >
@@ -417,12 +417,12 @@ const EventModal = ({
             </button>
           )}
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-1">
           <button
             type="button"
             onClick={handleClose}
             disabled={isSaving}
-            className={`rounded-lg px-5 py-2.5 text-sm font-medium transition-all duration-200 ${
+            className={`rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
               isDark ? 'text-neutral-300 hover:bg-neutral-800 disabled:opacity-50' : 'text-gray-700 hover:bg-gray-100 disabled:opacity-50'
             } disabled:cursor-not-allowed hover:scale-105 active:scale-95`}
           >
@@ -431,7 +431,7 @@ const EventModal = ({
           <button
             type="submit"
             disabled={isSaving}
-            className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-6 py-2.5 text-sm font-medium text-white transition-all duration-200 hover:bg-blue-700 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60 hover:scale-105 active:scale-95"
+            className="inline-flex items-center gap-1 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white transition-all duration-200 hover:bg-blue-700 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60 hover:scale-105 active:scale-95"
           >
             {isSaving ? (
               <>
@@ -453,7 +453,7 @@ const EventModal = ({
   return (
     <div className={`fixed inset-0 z-50 transition-opacity duration-200 ${isAnimating ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
       <div
-        className={`absolute inset-0   transition-all duration-200 ${isDark ? 'bg-black/70' : 'bg-black/40'}`}
+        className={`absolute inset-0 transition-all duration-200 ${isDark ? 'bg-black/70' : 'bg-black/40'}`}
         onClick={handleClose}
       />
 
@@ -462,7 +462,7 @@ const EventModal = ({
           <div
             className={`w-full max-w-3xl rounded-2xl ${panelSurface} shadow-2xl border ${
               isDark ? 'border-neutral-700' : 'border-gray-200'
-            } max-h-[90vh] overflow-hidden transform transition-all duration-300 ${
+            } max-h-[90vh] flex flex-col transform transition-all duration-300 ${
               isAnimating ? 'translate-y-0 scale-100 opacity-100' : 'translate-y-8 scale-95 opacity-0'
             }`}
             onClick={(event) => event.stopPropagation()}
@@ -475,7 +475,7 @@ const EventModal = ({
           <div
             className={`w-full rounded-2xl ${panelSurface} shadow-2xl border ${
               isDark ? 'border-neutral-700' : 'border-gray-200'
-            } max-h-[85vh] overflow-hidden transform transition-all duration-200 ${
+            } max-h-[85vh] flex flex-col transform transition-all duration-200 overflow-auto ${
               isAnimating ? 'translate-y-0 scale-100 opacity-100' : '-translate-y-2 scale-95 opacity-0'
             }`}
             style={{
