@@ -15,7 +15,6 @@ const Calendar = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [modalVariant, setModalVariant] = useState('quick');
-  const [modalAnchor, setModalAnchor] = useState(null);
   const dispatch = useDispatch();
   const { events, selectedEvent, loading } = useSelector((state) => state.events);
   const { isDark } = useTheme();
@@ -38,15 +37,13 @@ const Calendar = () => {
     dispatch(selectEvent(null));
     setSelectedDate(new Date());
     setModalVariant('quick');
-    setModalAnchor(null);
     setIsModalOpen(true);
   };
 
-  const handleDayClick = (date, anchorPosition) => {
+  const handleDayClick = (date) => {
     dispatch(selectEvent(null));
     setSelectedDate(date);
     setModalVariant('quick');
-    setModalAnchor(anchorPosition || null);
     setIsModalOpen(true);
   };
 
@@ -54,15 +51,13 @@ const Calendar = () => {
     dispatch(selectEvent(null));
     setSelectedDate(date);
     setModalVariant('full');
-    setModalAnchor(null);
     setIsModalOpen(true);
   };
 
-  const handleEventClick = (event, anchorPosition) => {
+  const handleEventClick = (event) => {
     dispatch(selectEvent(event));
     setSelectedDate(new Date(event.start));
     setModalVariant('quick');
-    setModalAnchor(anchorPosition || null);
     setIsModalOpen(true);
   };
 
@@ -70,7 +65,6 @@ const Calendar = () => {
     dispatch(selectEvent(event));
     setSelectedDate(new Date(event.start));
     setModalVariant('full');
-    setModalAnchor(null);
     setIsModalOpen(true);
   };
 
@@ -78,13 +72,10 @@ const Calendar = () => {
     setIsModalOpen(false);
     setSelectedDate(null);
     setModalVariant('quick');
-    setModalAnchor(null);
-    loadEvents();
   };
 
   const handleExpandModal = () => {
     setModalVariant('full');
-    setModalAnchor(null);
   };
 
   const handleToggleSidebar = () => {
@@ -126,7 +117,6 @@ const Calendar = () => {
         selectedDate={selectedDate}
         editEvent={selectedEvent}
         variant={modalVariant}
-        anchorPosition={modalAnchor}
         onExpand={handleExpandModal}
       />
     </div>
